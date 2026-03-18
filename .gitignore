@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment
+.env
+
+# Data (optional)
+data/raw/
+
+# OS
+.DS_Store
