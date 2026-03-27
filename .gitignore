@@ -9,7 +9,7 @@ __pycache__/
 .env
 
 # Data (optional)
-data/raw/
+# data/raw/
 
 # OS
 .DS_Store
