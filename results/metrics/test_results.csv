@@ -1,0 +1,2 @@
+test_score,test_metric,selected_features,n_selected,best_cv_score,best_fitness
+0.7943879043508548,f1_weighted,"['SEX', 'AGE', 'WGHT (lbs)', 'BMI', 'EDUCATION_LEVEL', 'EMPLOYMENT_STATUS', 'INSR_STATUS', 'GEN_HLTH', 'EXER_STATUS', 'HIGH_BP', 'CHOL_MEDS']",11,0.7954541748290781,0.7927170243851351
