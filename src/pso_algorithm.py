@@ -7,11 +7,10 @@ class PSOFeatureSelector:
     def __init__(self, n_particles=20, n_iterations=20, alpha=0.9, beta=0.1):
         self.n_particles = n_particles
         self.n_iterations = n_iterations
-        self.alpha = alpha  # качество модели
-        self.beta = beta    # штраф за количество фич
+        self.alpha = alpha
+        self.beta = beta
 
     def _fitness(self, particle, X, y):
-        # если ни одной фичи не выбрано
         if np.sum(particle) == 0:
             return 1.0
 
@@ -33,7 +32,6 @@ class PSOFeatureSelector:
 
         n_features = X.shape[1]
 
-        # инициализация
         particles = np.random.randint(0, 2, (self.n_particles, n_features))
         velocities = np.random.rand(self.n_particles, n_features)
 
@@ -70,3 +68,10 @@ class PSOFeatureSelector:
 
     def transform(self, X):
         return X.loc[:, self.best_features_]
+        
+selected_features = X_train.columns[pso.best_features_]
+
+selected_features.to_series().to_csv(
+    "../results/selected_features.csv",
+    index=False
+)
