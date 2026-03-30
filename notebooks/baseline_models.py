@@ -1,10 +1,10 @@
 import sys
 import os
 import pandas as pd
-from src.pso import PSOFeatureSelector
 
 sys.path.append(os.path.abspath("../"))
 
+from src.pso_algorithm import PSOFeatureSelector
 from src.models import get_models
 from src.evaluation import evaluate
 
