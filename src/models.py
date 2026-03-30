@@ -23,8 +23,3 @@ def get_models():
     }
 
     return models
-
-# "svm": Pipeline([
-#             ("scaler", StandardScaler()),
-#             ("model", SVC(kernel="rbf", probability=True))
-#         ]),
