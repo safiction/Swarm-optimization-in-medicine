@@ -14,7 +14,7 @@ def get_models():
             ("model", LogisticRegression(max_iter=1000))
         ]),
 
-        "random_forest": RandomForestClassifier(random_state=42),
+        ## "random_forest": RandomForestClassifier(random_state=42),
 
         "catboost": CatBoostClassifier(
             verbose=0,
