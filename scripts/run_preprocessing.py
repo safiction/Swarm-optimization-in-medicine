@@ -34,6 +34,9 @@ def main():
     print("\nRemaining missing values after imputation:")
     print(summarize_missing_values(df))
 
+    df["DIABETES_STATUS"] = df["DIABETES_STATUS"].apply(
+    lambda x: 0 if x == 0 else 1)
+    
     save_data(df, processed_path)
     print("\nClean dataset saved to:")
     print(processed_path)
