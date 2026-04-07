@@ -19,11 +19,10 @@ class PSOFeatureSelector:
 
         model = RandomForestClassifier(
             n_estimators=100,
-            max_depth=10,
-            min_samples_leaf=5,
-            n_jobs=-1,
+            min_samples_leaf=10,
+            class_weight="balanced",
             random_state=42,
-            class_weight="balanced"
+            n_jobs=-1
         )
 
         scores = cross_val_score(model, X_selected, y, cv=3, scoring="f1", n_jobs=-1)
