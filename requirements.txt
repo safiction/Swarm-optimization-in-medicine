@@ -1,8 +1,7 @@
-numpy
 pandas
+numpy
 scikit-learn
+catboost
+jupyter
 matplotlib
 seaborn
-jupyter
-pyswarm
-plotly

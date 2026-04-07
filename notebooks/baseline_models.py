@@ -6,6 +6,7 @@ from sklearn.utils import resample
 
 sys.path.append(os.path.abspath("../"))
 
+from src.pso_algorithm import PSOFeatureSelector
 from src.models import get_models
 from src.evaluation import evaluate
 from src.pso_algorithm import PSOFeatureSelector
