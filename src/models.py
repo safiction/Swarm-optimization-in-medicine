@@ -11,15 +11,18 @@ def get_models():
     models = {
         "logistic_regression": Pipeline([
             ("scaler", StandardScaler()),
-            ("model", LogisticRegression(max_iter=1000))
+            ("model", LogisticRegression(max_iter=1000, class_weight="balanced"))
         ]),
-
-        "random_forest": RandomForestClassifier(random_state=42),
-
+        "random_forest": RandomForestClassifier(
+            min_samples_leaf=10,
+            class_weight="balanced",
+            random_state=42,
+            n_jobs=-1
+        ),
         "catboost": CatBoostClassifier(
             verbose=0,
+            auto_class_weights="Balanced",
             random_state=42
         )
     }
-
     return models
