@@ -4,7 +4,7 @@ from sklearn.model_selection import cross_val_score
 
 
 class PSOFeatureSelector:
-    def __init__(self, n_particles=5, n_iterations=5, alpha=0.9, beta=0.1):
+    def __init__(self, n_particles=5, n_iterations=5, alpha=0.9, beta=0.05):
         self.n_particles = n_particles
         self.n_iterations = n_iterations
         self.alpha = alpha
@@ -17,9 +17,15 @@ class PSOFeatureSelector:
         selected = particle.astype(bool)
         X_selected = X[:, selected]
 
-        model = RandomForestClassifier(random_state=42)
+        model = RandomForestClassifier(
+            n_estimators=100,
+            min_samples_leaf=10,
+            class_weight="balanced",
+            random_state=42,
+            n_jobs=-1
+        )
 
-        scores = cross_val_score(model, X_selected, y, cv=2, scoring="f1_macro")
+        scores = cross_val_score(model, X_selected, y, cv=3, scoring="f1", n_jobs=-1)
 
         score = scores.mean()
 
@@ -29,7 +35,6 @@ class PSOFeatureSelector:
 
     def fit(self, X, y):
         X = X.values if hasattr(X, "values") else X
-
         n_features = X.shape[1]
 
         particles = np.random.randint(0, 2, (self.n_particles, n_features))
@@ -68,3 +73,4 @@ class PSOFeatureSelector:
 
     def transform(self, X):
         return X.loc[:, self.best_features_]
+    
