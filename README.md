@@ -6,53 +6,138 @@ This project aims to improve diabetes detection by applying PSO for feature sele
 ## Objectives
 - Build baseline machine learning models using all features;
 - Apply PSO to select optimal feature subsets;
-- Compare optimized models with baseline performance;
-- Analyze the stability of selected features.
+- Compare model performance before and after feature selection;
+- Analyze the stability of selected features across multiple runs.
+
+---
 
 ## Dataset
-We use the BRFSS Diabetes Dataset from Kaggle:
+We use the **2023 BRFSS Diabetes Dataset** from Kaggle:
 
 🔗 https://www.kaggle.com/datasets/spandanjit2005/brfss-diabetes-dataset/data
 
 ### Dataset Characteristics:
-- ~416000 instances
+- ~416,000 instances
 - 27 features
-- Target variable: `DIABETES_STATUS` (multi-class)
+- Target variable: `DIABETES_STATUS` (binary classification)
   - 0: No diabetes  
-  - 1: Prediabetes  
-  - 2: Diabetes during pregnancy  
-  - 3: Diabetes  
+  - 1: Diabetes / Prediabetes / Pregnancy diabetes  
 
 ## Methods
+### Baseline Models
+- Logistic Regression  
+- Random Forest  
+- CatBoost  
+
+### Feature Selection
+- Particle Swarm Optimization (PSO)
+- Binary encoding of feature subsets
+- Fitness function:
+  - Maximizes model performance (F1-score)
+  - Penalizes large feature subsets
+
+### Evaluation Metrics
+- Accuracy  
+- F1-score 
+- Precision  
+- Recall  
+
+### Additional Analysis
+- Feature reduction impact
+- Stability of selected features
+- Performance comparison before and after PSO
 - Data preprocessing and cleaning;
-- Baseline ML models (Logistic Regression, Random Forest);
+- Baseline ML models (Logistic Regression, Random Forest, Catboost);
 - Particle Swarm Optimization (PSO) for feature selection;
 - Model evaluation and comparison;
 - Stability analysis.
+---
 
 ## Tech Stack
-- Python
+- Python 3.11
 - Jupyter Notebook (Anaconda)
 - scikit-learn
+- CatBoost
 - NumPy, Pandas
-- Matplotlib / Seaborn
+- Matplotlib, Seaborn
 
-## How to Run
-
+## How to Run using Docker
+Build image:
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+docker build -t pso-medical-project .
+```
+
+Run container:
+```bash
+docker run -it pso-medical-project
+```
+
+Inside container:
+```bash
+python notebooks/baseline_models.py
+```
+
+## Option 2: Local Setup
+```bash
+git clone https://github.com/safiction/Swarm-optimization-in-medicine.git
+cd Swarm-optimization-in-medicine
+
 pip install -r requirements.txt
-jupyter notebook
+```
+
+Run baseline models:
+```bash
+python notebooks/baseline_models.py
+```
+
+Run PSO experiments:
+```bash
+python notebooks/PSO_analysis.ipynb
 ```
 
 ## Project Structure
-project/
-│── data/
-│── notebooks/
-│── src/
-│── results/
-│── docs/
+```text
+Swarm-optimization-in-medicine/
+│
+├── data/
+│   ├── raw/                # Original dataset (2023 BRFSS)
+│   └── processed/          # Cleaned & split data
+│       ├── X_train.csv
+│       ├── X_test.csv
+│       ├── y_train.csv
+│       └── y_test.csv
+│
+├── notebooks/
+│   ├── EDA.ipynb
+│   ├── baseline_models.py
+│   └── PSO_analysis.ipynb
+│
+├── src/
+│   ├── models.py           # ML models
+│   ├── evaluation.py       # Metrics
+│   ├── preprocessing.py    # Data processing
+│   ├── pso.py              # PSO implementation
+│   └── pso_algorithm.py    # Core PSO logic
+│
+├── results/
+│   ├── figures/            # Visualizations
+│   │   ├── baseline_vs_pso_accuracy.png
+│   │   ├── baseline_vs_pso_f1.png
+│   │   └── pso_feature_stability_bar.png
+│   │
+│   └── metrics/            # Experimental results
+│       ├── baseline_results.csv
+│       ├── pso_experiments.csv
+│       ├── baseline_vs_pso_comparison.csv
+│       └── pso_stability.csv
+│
+├── scripts/
+│   └── run_preprocessing.py
+│
+├── Dockerfile
+├── requirements.txt
+└── README.md
+```
 
 ## Team Members and Roles
 - __Elvina__ – EDA, data analysis, stability analysis;
@@ -70,5 +155,16 @@ project/
 - Reduced feature set;
 - Analysis of feature stability.
 
+## Results
+- PSO successfully reduced the number of features
+- Comparable performance was achieved with fewer inputs
+- Feature selection showed stability across multiple runs
+- CatBoost consistently achieved strong performance
+
+## Key Insights
+- Feature reduction does not significantly degrade performance
+- PSO effectively balances performance and model simplicity
+- Ensemble models benefit most from optimized feature subsets
+
 ## License
-This project is for academic purposes.
+This project is for academic purposes only.
