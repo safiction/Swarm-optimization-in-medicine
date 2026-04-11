@@ -116,8 +116,7 @@ Swarm-optimization-in-medicine/
 │   ├── models.py           # ML models
 │   ├── evaluation.py       # Metrics
 │   ├── preprocessing.py    # Data processing
-│   ├── pso.py              # PSO implementation
-│   └── pso_algorithm.py    # Core PSO logic
+│   └── pso_algorithm.py    # PSO implementation
 │
 ├── results/
 │   ├── figures/            # Visualizations
