@@ -52,7 +52,8 @@ X_sample, y_sample = resample(
 
 pso = PSOFeatureSelector(
     n_particles=15,
-    n_iterations=15
+    n_iterations=15,
+    random_state=42
 )
     
 

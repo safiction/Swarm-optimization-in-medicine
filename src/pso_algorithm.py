@@ -4,11 +4,12 @@ from sklearn.model_selection import cross_val_score
 
 
 class PSOFeatureSelector:
-    def __init__(self, n_particles=5, n_iterations=5, alpha=0.9, beta=0.05):
+    def __init__(self, n_particles=5, n_iterations=5, alpha=0.9, beta=0.05, random_state=None):
         self.n_particles = n_particles
         self.n_iterations = n_iterations
         self.alpha = alpha
         self.beta = beta
+        self.random_state = random_state
 
     def _fitness(self, particle, X, y):
         if np.sum(particle) == 0:
@@ -36,9 +37,10 @@ class PSOFeatureSelector:
     def fit(self, X, y):
         X = X.values if hasattr(X, "values") else X
         n_features = X.shape[1]
+        rng = np.random.default_rng(self.random_state)
 
-        particles = np.random.randint(0, 2, (self.n_particles, n_features))
-        velocities = np.random.rand(self.n_particles, n_features)
+        particles = rng.integers(0, 2, size=(self.n_particles, n_features))
+        velocities = rng.random((self.n_particles, n_features))
 
         personal_best = particles.copy()
         personal_best_scores = np.array(
@@ -49,7 +51,7 @@ class PSOFeatureSelector:
 
         for _ in range(self.n_iterations):
             for i in range(self.n_particles):
-                r1, r2 = np.random.rand(), np.random.rand()
+                r1, r2 = rng.random(), rng.random()
 
                 velocities[i] = (
                     0.5 * velocities[i]
@@ -58,7 +60,7 @@ class PSOFeatureSelector:
                 )
 
                 sigmoid = 1 / (1 + np.exp(-velocities[i]))
-                particles[i] = (np.random.rand(n_features) < sigmoid).astype(int)
+                particles[i] = (rng.random(n_features) < sigmoid).astype(int)
 
                 score = self._fitness(particles[i], X, y)
 
