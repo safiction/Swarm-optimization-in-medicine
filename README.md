@@ -77,13 +77,6 @@ Inside container:
 python notebooks/baseline_models.py
 ```
 
-```bash
-git clone https://github.com/safiction/Swarm-optimization-in-medicine.git
-cd your-repo-name
-pip install -r requirements.txt
-jupyter notebook
-```
-
 ## Option 2: Local Setup
 ```bash
 git clone https://github.com/safiction/Swarm-optimization-in-medicine.git

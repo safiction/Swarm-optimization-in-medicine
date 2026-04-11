@@ -4,9 +4,11 @@ from sklearn.model_selection import train_test_split
 
 
 def split_data(df):
+    # separate features and target
     X = df.drop(columns=["DIABETES_STATUS"])
     y = df["DIABETES_STATUS"]
 
+    # stratified split to preserve class distribution
     X_train, X_test, y_train, y_test = train_test_split(
         X,
         y,
@@ -19,6 +21,7 @@ def split_data(df):
 
 
 def load_data(path: str) -> pd.DataFrame:
+    # load dataset from csv
     return pd.read_csv(path)
 
 
@@ -32,6 +35,7 @@ def save_splits(X_train, X_test, y_train, y_test, base_path):
 def drop_unnecessary_columns(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
 
+    # predefined columns with high missingness or low relevance
     cols_to_drop = ["BP_MEDS", "ALHL_STATUS", "POOR_HLTH_DAYS", "YEAR"]
 
     cols_to_drop = [col for col in cols_to_drop if col in df.columns]
@@ -40,6 +44,7 @@ def drop_unnecessary_columns(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def get_feature_groups():
+    # numerical features (use median imputation)
     numeric_cols = [
         "WGHT (lbs)",
         "HGHT (ft)",
@@ -48,6 +53,7 @@ def get_feature_groups():
         "MENT_HLTH_DAYS"
     ]
 
+    # categorical features (use mode imputation)
     categorical_cols = [
         "SEX",
         "AGE",
@@ -77,10 +83,12 @@ def impute_missing_values(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
     numeric_cols, categorical_cols = get_feature_groups()
 
+    # fill numeric columns with median
     for col in numeric_cols:
         if col in df.columns and df[col].isnull().sum() > 0:
             df[col] = df[col].fillna(df[col].median())
 
+    # fill categorical columns with most frequent value
     for col in categorical_cols:
         if col in df.columns and df[col].isnull().sum() > 0:
             df[col] = df[col].fillna(df[col].mode()[0])
@@ -89,6 +97,7 @@ def impute_missing_values(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def summarize_missing_values(df: pd.DataFrame) -> pd.DataFrame:
+    # compute missing counts and percentages
     missing_count = df.isnull().sum()
     missing_pct = (df.isnull().sum() / len(df)) * 100
 
@@ -98,6 +107,7 @@ def summarize_missing_values(df: pd.DataFrame) -> pd.DataFrame:
         "missing_percent": missing_pct.values
     })
 
+    # keep only columns with missing values
     summary = summary[summary["missing_count"] > 0]
     summary = summary.sort_values("missing_percent", ascending=False)
 
