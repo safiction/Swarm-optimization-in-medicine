@@ -61,23 +61,27 @@ We use the **2023 BRFSS Diabetes Dataset** from Kaggle:
 - NumPy, Pandas
 - Matplotlib, Seaborn
 
-## How to Run using Docker
-Build image:
+## How to Run using Docker (recommended)
+1. Clone the repository
+```bash
+git clone https://github.com/safiction/Swarm-optimization-in-medicine.git
+cd Swarm-optimization-in-medicine
+```
+
+2. Build image:
 ```bash
 docker build -t pso-medical-project .
 ```
 
-Run container:
+3. Run container:
 ```bash
 docker run -it pso-medical-project
 ```
 
-Inside container:
-```bash
-python notebooks/baseline_models.py
-```
+4. Explore the PSO algorithm in the `notebooks/PSO_analysis.ipynb` file (run cells inside, change parameters)
 
 ## Option 2: Local Setup
+1. Clone the repository
 ```bash
 git clone https://github.com/safiction/Swarm-optimization-in-medicine.git
 cd Swarm-optimization-in-medicine
@@ -85,12 +89,12 @@ cd Swarm-optimization-in-medicine
 pip install -r requirements.txt
 ```
 
-Run baseline models:
+2. Run baseline models:
 ```bash
 python notebooks/baseline_models.py
 ```
 
-Run PSO experiments:
+3. Run PSO experiments:
 ```bash
 python notebooks/PSO_analysis.ipynb
 ```
